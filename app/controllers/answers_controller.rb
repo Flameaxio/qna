@@ -11,11 +11,17 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.build(answer_params)
+    @answer.user_id = current_user.id
     if @answer.save
-      redirect_to question_path(@question)
+      redirect_to question_path(@question), notice: 'Successfully your published answer!'
     else
       render :new
     end
+  end
+
+  def destroy
+    @answer.destroy
+    redirect_to questions_path, notice: 'Successfully deleted your answer!'
   end
 
   private

@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Qna</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Qna</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid d-flex flex-row-reverse">
+    <div class="user_control float-right">
+      <% if user_signed_in? %>
+        <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to 'Sign in', new_user_session_path %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+<%= yield %>
+</body>
 </html>

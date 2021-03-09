@@ -1,0 +1,8 @@
+tr
+  td = question.title
+  td = question.short_body
+  td = question.user
+  td = link_to 'Show', question_path(question)
+  td = link_to 'Edit', edit_question_path(question)
+  - if(user_signed_in? && current_user.email == question.user)
+    td = link_to 'Destroy', question_path(question), method: :delete

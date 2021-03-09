@@ -1,0 +1,11 @@
+= form_for @question do |f|
+  div.form-group
+    = f.label :title
+    br
+    = f.text_field :title
+  div.form-group.mt-3
+    = f.label :body
+    br
+    = f.text_area :body
+  div.form-group.mt-3
+  = f.submit 'Ask!'

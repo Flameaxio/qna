@@ -1,11 +1,15 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.all
   end
 
-  def show; end
+  def show
+    @answers = @question.answers
+    @answer = Answer.new(question: @question) if user_signed_in?
+  end
 
   def new
     @question = Question.new
@@ -15,8 +19,9 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(questions_params)
+    @question.user_id = current_user.id
     if @question.save
-      redirect_to @question
+      redirect_to questions_path, notice: 'Your question was successfully published!'
     else
       render :new
     end

@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+*{
+    box-sizing: border-box;
+}
+
+.answer{
+    padding: 15px;
+}

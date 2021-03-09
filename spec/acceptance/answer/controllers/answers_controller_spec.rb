@@ -3,6 +3,12 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
 
+  let(:user) { create(:user) }
+
+  setup do
+    allow(controller).to receive(:current_user).and_return(user)
+  end
+
   describe 'GET #show' do
     let(:answer) { create(:answer, question: question) }
 
