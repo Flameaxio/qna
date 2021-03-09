@@ -6,15 +6,12 @@ feature 'User sign in', '
   I want to be able to sign in
 ' do
 
+  given(:user) { create(:user) }
+
   scenario 'Registered user tries to sign in' do
-    User.create!(email: 'user@test.com', password: '123456')
+    sign_in(user)
 
-    visit new_user_session_path
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '123456'
-    click_on 'Sign in'
-
-    expect(page).to have_content 'User signed in successfully.'
+    expect(page).to have_content 'Signed in successfully.'
     expect(current_path).to eq root_path
   end
 
@@ -22,9 +19,10 @@ feature 'User sign in', '
     visit new_user_session_path
     fill_in 'Email', with: 'wrong@test.com'
     fill_in 'Password', with: '123456'
-    click_on 'Sign in'
 
-    expect(page).to have_content 'Invalid email or password.'
+    click_on 'Log in'
+
+    expect(page).to have_content 'Invalid Email or password.'
     expect(current_path).to eq new_user_session_path
   end
 
