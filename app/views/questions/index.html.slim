@@ -1,10 +1,12 @@
-table.table.table-bordered
-  thead.table-dark
-    tr
-      th Title
-      th Body
-      th
-      th
-      th
-  = render @questions
-p = link_to 'Ask a question', new_question_path
+div.container-fluid
+  table.table.table-bordered
+    thead.table-dark
+      tr
+        th Title
+        th Body
+        th Author
+        th
+        th
+        th
+    = render @questions
+  p = link_to 'Ask a question', new_question_path
