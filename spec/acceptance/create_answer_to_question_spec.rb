@@ -8,15 +8,17 @@ feature 'Create answer to question', '
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Authenticated user creates an answer' do
+  scenario 'Authenticated user creates an answer', js: true do
     sign_in(user)
 
     visit question_path(question)
     fill_in 'answer[body]', with: 'My answer'
     click_on 'Submit'
 
-    expect(page).to have_content 'Successfully your published answer!'
-    expect(page).to have_content 'My answer'
+    expect(current_path).to eq question_path(question)
+    within 'div.answers', visible: false do
+      expect(page).to have_content 'My answer'
+    end
   end
 
   scenario 'Unauthenticated user tries to create an answer' do
