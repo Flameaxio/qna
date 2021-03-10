@@ -13,6 +13,7 @@ div.container
       = form_for([@question, @answer], remote: true) do |f|
         div.form-group
           = f.label :body, 'Your answer: '
+          div.errors
           = f.text_area :body, class: 'form-control'
         = f.submit 'Submit', class: 'btn btn-primary mt-3'
   - else

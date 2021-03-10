@@ -1,7 +1,14 @@
-var string = "<div class='answer border'><%= render partial: 'questions/answer', locals: { answer: @answer } %>"
-<% if user_signed_in? && current_user.email == @answer.user %>
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |msg| %>
+    $('.errors').append('<%= j msg %>!')
+    $('.errors').css('color', 'red')
+  <% end %>
+<% else %>
+  var string = "<div class='answer border'><%= render partial: 'questions/answer', locals: { answer: @answer } %>"
+  <% if user_signed_in? && current_user.email == @answer.user %>
   string += ('<%= j link_to('Delete', question_answer_path(@answer.question, @answer), method: :delete)%>');
+  <% end %>
+  let elem = document.getElementsByClassName('answers')[0]
+  elem.innerHTML += string;
+  document.getElementById('answer_body').value = '';
 <% end %>
-let elem = document.getElementsByClassName('answers')[0]
-elem.innerHTML += string;
-document.getElementById('answer_body').value = '';

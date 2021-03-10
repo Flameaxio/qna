@@ -26,4 +26,14 @@ feature 'Create answer to question', '
     expect(page).to_not have_content 'Your answer: '
     expect(page).to have_content 'Login in order to post answers!'
   end
+
+  scenario 'Authenticated user tries to create answer with blank field', js: true do
+    sign_in(user)
+
+    visit question_path(question)
+    click_on 'Submit'
+
+    expect(current_path).to eq question_path(question)
+    expect(page).to have_content "Body can't be blank!"
+  end
 end
