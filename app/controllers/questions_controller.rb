@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
   def show
     @answers = @question.answers
     @answer = Answer.new(question: @question) if user_signed_in?
+    @answer.attachments.build
   end
 
   def new
@@ -39,7 +40,7 @@ class QuestionsController < ApplicationController
   private
 
   def questions_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, attachments_attributes: [:file])
   end
 
   def find_question
