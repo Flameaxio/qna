@@ -3,6 +3,7 @@ FactoryBot.define do
     body { 'Body' }
     question
     user_id { create(:user).id }
+    best { false }
   end
 
   factory :invalid_answer, class: 'Answer' do
