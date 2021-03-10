@@ -1,0 +1,4 @@
+$('.answer').removeClass('green');
+$('.answer-'+<%= @answer.id %>).parent().addClass("green");
+$('.answer').first().before($('.answer-'+<%= @answer.id %>).parent())
+location.reload();
