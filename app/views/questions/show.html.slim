@@ -8,8 +8,19 @@ div.container
         = f.text_field :title, class: 'edit-title'
         = f.label :body, hidden: true
         = f.text_area :body, class: 'edit-body'
-        = f.submit 'Save'
+        div.bottom-wrapper
+          a href='' class="add-file" Add file
+          = fields_for :attachments do |a|
+            div.add-file-form style='display: none;'
+              = a.label :file
+              = a.file_field :file
+          = f.submit 'Save'
       = link_to 'Edit', '', class: 'edit-question-link'
+    div.attachments
+      p Attachments:
+      ul
+        - @answer.attachments.each do |a|
+          = a.identifier.filename if a.try(:identifier)
     hr
   div.answers
     - if @answers.where(best: true).size > 0
