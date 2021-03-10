@@ -56,3 +56,14 @@ form{
     font-size: 24px;
   }
 }
+
+.bottom-wrapper{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  .add-file-form{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
