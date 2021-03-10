@@ -1,13 +1,22 @@
 div.container
-  h1 = @question.title
-  h3 = @question.body
-  hr
+  div.question
+    h1 class= 'question-title' = @question.title
+    h3 class= 'question-body' = @question.body
+    - if user_signed_in? && current_user.email == @question.user
+      = form_for(@question, remote: true, html: { class: 'edit-question-form', style: 'display:none;' }) do |f|
+        = f.label :title, hidden: true
+        = f.text_field :title, class: 'edit-title'
+        = f.label :body, hidden: true
+        = f.text_area :body, class: 'edit-body'
+        = f.submit 'Save'
+      = link_to 'Edit', '', class: 'edit-question-link'
+    hr
   div.answers
+    - if @answers.where(best: true).size > 0
+      = render partial: 'answer', locals: { answer: @answers.where(best: true)[0] , question: @question}
     - @answers.each do |a|
-      div.answer.border
-        = render partial: 'answer', locals: { answer: a }
-        - if (user_signed_in? && current_user.email == a.user)
-          = link_to 'Delete', question_answer_path(a.question, a), method: :delete
+      - unless a.best?
+        = render partial: 'answer', locals: { answer: a , question: @question}
   - if user_signed_in?
     div.new_answer
       = form_for([@question, @answer], remote: true) do |f|
