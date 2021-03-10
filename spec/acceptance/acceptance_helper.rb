@@ -1,9 +1,9 @@
-require_relative 'rails_helper'
+require 'rails_helper'
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
-  config.before(:suit) do
+  config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
   end
 
