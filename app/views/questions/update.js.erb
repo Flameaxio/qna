@@ -1,0 +1,19 @@
+<% if @question.errors.present? %>
+<% @question.errors.full_messages.each do |msg| %>
+$('.errors').append('<%= j msg %>!')
+$('.errors').css('color', 'red')
+<% end %>
+<% else %>
+$('.question-title').html('<%= @question.title %>')
+$('.question-body').html('<%= @question.body %>')
+$('.question-title').show()
+$('.question-body').show()
+$('.edit-question-form').hide()
+if ($('.edit-question-link').hasClass('cancel')) {
+    $('.edit-question-link').html('Edit');
+    $('.edit-question-link').removeClass('cancel');
+} else {
+    $('.edit-question-link').html('Cancel');
+    $('.edit-question-link').addClass('cancel');
+}
+<% end %>

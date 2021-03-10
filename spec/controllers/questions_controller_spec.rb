@@ -8,9 +8,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { get :index }
 
-    it 'populates array of all questions' do
-      expect(assigns(:questions)).to eq questions
-    end
 
     it 'render index view' do
       expect(response).to render_template :index
@@ -44,14 +41,10 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #edit' do
     sign_in_user
-    before { get :edit, params: { id: question } }
+    before { get :edit, params: { id: question }, format: :js }
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
-    end
-
-    it 'render edit view' do
-      expect(response).to render_template :edit
     end
   end
 
@@ -84,34 +77,30 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
         expect(assigns(:question)).to eq question
       end
 
       it 'change question attributes' do
-        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }, format: :js
         question.reload
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end
 
       it 'redirects to updated question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
         expect(response).to redirect_to question
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params: { id: question, question: { title: nil, body: 'new body' } } }
+      before { patch :update, params: { id: question, question: { title: nil, body: 'new body' } }, format: :js }
 
       it 'does not change question attributes' do
         question.reload
         expect(question.title).to eq 'Title'
         expect(question.body).to eq 'Body'
-      end
-
-      it 're-render edit view' do
-        expect(response).to render_template :edit
       end
     end
   end

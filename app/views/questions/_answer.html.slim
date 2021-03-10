@@ -1,2 +1,19 @@
-h5 = answer.user
-p = answer.body
+div class = (["answer", answer.best ? "green" : ""])
+  div class = (["answer-#{answer.id}"])
+    h5 = answer.user
+    p class = "body-#{answer.id}" = answer.body
+    - if user_signed_in?
+      = form_for([question, answer], remote: true, html: { class: "answer-form-#{answer.id} answer-form" }) do |f|
+        = f.label :body, "Answer", hidden: true
+        = f.text_area :body
+        = f.submit "Save"
+      div.actions-wrapper
+        hr
+        div.actions
+          - if current_user.email == answer.user
+            = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+            = form_tag question_answer_path(answer.question, answer), method: :delete, remote: true do |f|
+              = submit_tag 'Delete', id: 'select'
+          - if current_user.email == question.user
+            = form_tag set_best_question_answer_path(question,answer), remote: true do |f|
+              = submit_tag 'Select as the best', id: 'select'

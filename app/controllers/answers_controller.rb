@@ -1,9 +1,13 @@
 class AnswersController < ApplicationController
   before_action :find_question
+  before_action :find_answer, only: %i[update show destroy set_best]
 
-  def show
-    @answer = @question.answers.find(params[:id])
+  def update
+    @question = @answer.question
+    @answer.update(answer_params)
   end
+
+  def show; end
 
   def new
     @answer = @question.answers.build
@@ -16,12 +20,24 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-    @answer.destroy
-    redirect_to question_path(@question), notice: 'Successfully deleted your answer!'
+    respond_to do |format|
+      format.js { @answer.destroy }
+    end
+  end
+
+  def set_best
+    Answer.where(question_id: @question.id).each do |x|
+      x.best = false
+      x.save
+    end
+    @answer.update(best: true)
   end
 
   private
+
+  def find_answer
+    @answer = Answer.find(params[:id])
+  end
 
   def find_question
     @question = Question.find(params[:question_id])
