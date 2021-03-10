@@ -30,4 +30,9 @@ $(document).on('turbolinks:load', function () {
             $(this).addClass('cancel');
         }
     })
+
+    $('.add-file').click(function (e){
+        e.preventDefault();
+        $('.add-file-form').toggle();
+    })
 })
