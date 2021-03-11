@@ -4,7 +4,7 @@ $('.errors').append('<%= j msg %>!')
 $('.errors').css('color', 'red')
 <% end %>
 <% else %>
-$('#answer_body').val('')
+$('.new-answer-body').val('')
 $('.file').val('')
 document.getElementsByClassName('answers')[0].innerHTML += `<%= render partial: 'questions/answer',
  locals: { answer: @answer, question: @answer.question } %>`;

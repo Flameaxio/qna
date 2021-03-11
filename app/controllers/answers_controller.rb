@@ -38,6 +38,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, :attachment_id, attachments_attributes: [:file])
   end
 end
