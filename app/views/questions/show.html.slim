@@ -10,17 +10,22 @@ div.container
         = f.text_area :body, class: 'edit-body'
         div.bottom-wrapper
           a href='' class="add-file" Add file
-          = fields_for :attachments do |a|
-            div.add-file-form style='display: none;'
-              = a.label :file
-              = a.file_field :file
-          = f.submit 'Save'
+          div.files
+            = f.fields_for(:attachments, @question.attachments.build) do |a|
+              div.add-file-form style='display: none;'
+                = a.label :file
+                = a.file_field :file, class: 'file'
+          = f.submit 'Save', class: 'file-submit'
       = link_to 'Edit', '', class: 'edit-question-link'
-    div.attachments
-      p Attachments:
-      ul
-        - @answer.attachments.each do |a|
-          = a.identifier.filename if a.try(:identifier)
+    - if @question.attachments.any?
+      div.attachments
+        p Attachments:
+        ul.list
+          - @question.attachments.each do |a|
+            - unless a.new_record?
+              li
+                = link_to a.name, a.file.url
+                = render 'remove_form', question: @question, attachment: a
     hr
   div.answers
     - if @answers.where(best: true).size > 0
@@ -35,6 +40,13 @@ div.container
           = f.label :body, 'Your answer: '
           div.errors
           = f.text_area :body, class: 'form-control'
+          div.bottom-wrapper
+            a href='' class="add-file-answer" Add file
+            div.files
+              = f.fields_for(:attachments, @answer.attachments.build) do |a|
+                div.add-file-form-answer style='display: none;'
+                  = a.label :file
+                  = a.file_field :file, class: 'file'
         = f.submit 'Submit', class: 'btn btn-primary mt-3'
   - else
     p
