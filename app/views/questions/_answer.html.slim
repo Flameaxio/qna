@@ -1,5 +1,9 @@
 div class = (["answer", answer.best ? "green" : ""])
-  div class = (["answer-#{answer.id}"])
+  div.vote
+    a href = upvote_question_answer_path(answer.question, answer) data-method = "patch" data-remote = "true" = fa_icon "arrow-up", class: "upvote"
+    = answer.total_score
+    a href = downvote_question_answer_path(answer.question, answer) data-method = "patch" data-remote = "true" = fa_icon "arrow-down", class: "downvote"
+  div class = (["answer-#{answer.id} answer-body"])
     h5 = answer.user
     p class = "body-#{answer.id}" = answer.body
     - if user_signed_in?

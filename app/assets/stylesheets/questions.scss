@@ -35,6 +35,42 @@ textarea{
   min-height: 200px;
   position: relative;
   margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  .vote{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40px;
+    border: 1px solid black;
+    align-items: center;
+    a{
+      text-decoration: none;
+    }
+    .fa{
+      display: block;
+      color: transparent;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: black;
+      font-size: 32px;
+      transition: 0.1s;
+    }
+    .upvote:hover{
+      color: orange;
+    }
+    .downvote:hover{
+      color: blue;
+    }
+    .active-upvote{
+      color: orange;
+    }
+    .active-downvote{
+      color: blue;
+    }
+  }
+  .answer-body{
+    padding-left: 20px;
+  }
   ul {
     padding-bottom: 40px;
   }
