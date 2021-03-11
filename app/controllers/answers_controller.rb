@@ -27,6 +27,14 @@ class AnswersController < ApplicationController
     @answer.update(best: true)
   end
 
+  def upvote
+
+  end
+
+  def downvote
+
+  end
+
   private
 
   def find_answer
