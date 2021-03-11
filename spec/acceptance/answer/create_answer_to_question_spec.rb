@@ -21,6 +21,23 @@ feature 'Create answer to question', '
     end
   end
 
+  scenario 'Authenticated user creates an answer with an attachment', js: true do
+    sign_in(user)
+
+    visit question_path(question)
+    within '.container .new_answer_wrapper' do
+      fill_in 'answer[body]', with: 'My answer'
+      click_on 'Add file'
+      attach_file 'answer_attachments_attributes_0_file', "#{Rails.root}/spec/spec_helper.rb"
+      click_on 'Submit'
+    end
+
+    within '.answers' do
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
+  end
+
   scenario 'Unauthenticated user tries to create an answer' do
     visit question_path(question)
     expect(page).to_not have_content 'Your answer: '

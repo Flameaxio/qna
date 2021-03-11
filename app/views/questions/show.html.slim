@@ -34,7 +34,7 @@ div.container
       - unless a.best?
         = render partial: 'answer', locals: { answer: a , question: @question}
   - if user_signed_in?
-    div.new_answer
+    div.new_answer_wrapper
       = form_for([@question, @answer], remote: true) do |f|
         div.form-group
           = f.label :body, 'Your answer: '
