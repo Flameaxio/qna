@@ -35,6 +35,7 @@ gem 'carrierwave'
 
 git_source(:github){ |repo_name| "https://github.com/#{repo_name}.git" }
 
+gem "font-awesome-rails"
 gem 'remotipart', github: 'jbox-web/remotipart', tag: '1.6.0'
 
 group :development, :test do
