@@ -9,4 +9,8 @@ class Answer < ApplicationRecord
   def user
     User.find(user_id).email
   end
+
+  def total_score
+    UserOpinion.where(answer_id: id).inject(0) { |sum, x| sum + x }
+  end
 end
