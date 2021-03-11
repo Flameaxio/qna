@@ -9,7 +9,6 @@ class QuestionsController < ApplicationController
   def show
     @answers = @question.answers
     @answer = Answer.new(question: @question) if user_signed_in?
-    @answer.attachments.build
   end
 
   def new
@@ -37,10 +36,15 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
+  def remove_attachment
+    @question = Question.find(params[:id])
+    Attachment.find(params[:attachment_id]).destroy
+  end
+
   private
 
   def questions_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:file])
+    params.require(:question).permit(:title, :body, :attachment_id, attachments_attributes: [:file])
   end
 
   def find_question
