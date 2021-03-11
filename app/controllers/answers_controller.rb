@@ -7,12 +7,6 @@ class AnswersController < ApplicationController
     @answer.update(answer_params)
   end
 
-  def show; end
-
-  def new
-    @answer = @question.answers.build
-  end
-
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user_id = current_user.id
