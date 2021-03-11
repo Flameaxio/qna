@@ -8,7 +8,7 @@ feature 'Add file to question', '
   given!(:user) { create(:user) }
   given(:question) { create(:question, user_id: user.id) }
 
-  scenario 'User adds file to the question' do
+  scenario 'User adds file to the question', js: true do
     sign_in(user)
     visit question_path(question)
 
