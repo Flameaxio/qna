@@ -4,6 +4,7 @@ $('.errors').append('<%= j msg %>!')
 $('.errors').css('color', 'red')
 <% end %>
 <% else %>
+$(':input:not(:submit)').val('')
 document.getElementsByClassName('answers')[0].innerHTML += `<%= render partial: 'questions/answer',
  locals: { answer: @answer, question: @answer.question } %>`;
 <% end %>
