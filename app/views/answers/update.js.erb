@@ -5,12 +5,7 @@
   $('.errors').css('color', 'red')
 <% end %>
 <% else %>
-
-console.log(`<%= render partial: 'questions/answer', locals: { answer: @answer, question: @answer.question } %>`
-    .replace('class="answer green"', '').replace('class="answer"', ''))
-
-  document.getElementsByClassName('answer-<%= @answer.id %>')[0].innerHTML =
+document.getElementsByClassName('answer-<%= @answer.id %>')[0].innerHTML =
       `<%= render partial: 'questions/answer', locals: { answer: @answer, question: @answer.question } %>`
           .replace('class="answer green"', '').replace('class="answer"', '')
-
 <% end %>

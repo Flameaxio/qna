@@ -4,7 +4,6 @@ $('.errors').append('<%= j msg %>!')
 $('.errors').css('color', 'red')
 <% end %>
 <% else %>
-$('form').reset()
 $('.question-title').html('<%= @question.title %>')
 $('.question-body').html('<%= @question.body %>')
 $('.question-title').show()
