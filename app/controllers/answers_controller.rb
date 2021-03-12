@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[upvote downvote]
   before_action :find_question
   before_action :find_answer, only: %i[update show destroy set_best upvote downvote]
 
@@ -29,7 +29,7 @@ class AnswersController < ApplicationController
   end
 
   def upvote
-    if signed_in?
+    if user_signed_in?
       if current_user.email == @answer.user
         @answer.errors[:base] << "You can't vote for your answer!"
         respond_to do |format|
@@ -49,7 +49,10 @@ class AnswersController < ApplicationController
       @total_score = @answer.total_score
       @current_user_opinion = @answer.current_user_opinion(current_user) || 0
     else
-      redirect_to new_user_session_path
+      respond_to do |format|
+        format.html { redirect_to new_user_session_path, notice: 'You need to log in for this action' }
+      end
+      return
     end
     respond_to do |format|
       format.json do
@@ -61,7 +64,7 @@ class AnswersController < ApplicationController
   end
 
   def downvote
-    if signed_in?
+    if user_signed_in?
       if current_user.email == @answer.user
         @answer.errors[:base] << "You can't vote for your answer!"
         respond_to do |format|
@@ -80,6 +83,11 @@ class AnswersController < ApplicationController
       @answer.decrease_user_opinion(@opinion)
       @total_score = @answer.total_score
       @current_user_opinion = @answer.current_user_opinion(current_user) || 0
+    else
+      respond_to do |format|
+        format.html { redirect_to new_user_session_path, notice: 'You need to log in for this action' }
+      end
+      return
     end
     respond_to do |format|
       format.json do
