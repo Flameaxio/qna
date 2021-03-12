@@ -48,7 +48,8 @@ $(document).on('turbolinks:load', function () {
 <label for="question_attachments_attributes_` + ++number + `_file">File</label>
 <input class="file new-file" type="file" name="question[attachments_attributes][` + number + `][file]" id="question_attachments_attributes_` + number + `_file">
 </div>`
-        $('.file-submit').before(string)
+        if($('.file').val() !== '')
+            $('.files').append(string)
     });
 
     $(document).on('change', $('.file-new'), function () {
@@ -56,6 +57,7 @@ $(document).on('turbolinks:load', function () {
 <label for="question_attachments_attributes_` + ++number + `_file">File</label>
 <input class="file new-file" type="file" name="question[attachments_attributes][` + number + `][file]" id="question_attachments_attributes_` + number + `_file">
 </div>`
-        $('.file-new').last().after(string)
+        if($('.file').val() !== '')
+            $('.file-new').last().after(string)
     });
 })
