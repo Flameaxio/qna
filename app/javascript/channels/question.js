@@ -1,4 +1,12 @@
 $(document).on('turbolinks:load', function () {
+    /*Object.keys(window).forEach(key => {
+        if (/^on/.test(key)) {
+            window.addEventListener(key.slice(2), event => {
+                console.log(event);
+            });
+        }
+    });*/
+
     let number = 0;
     $('.add-file-form').not(':last').remove();
     $('.edit-answer-link').click(function (e) {
@@ -48,7 +56,7 @@ $(document).on('turbolinks:load', function () {
 <label for="question_attachments_attributes_` + ++number + `_file">File</label>
 <input class="file new-file" type="file" name="question[attachments_attributes][` + number + `][file]" id="question_attachments_attributes_` + number + `_file">
 </div>`
-        if($('.file').val() !== '')
+        if ($('.file').val() !== '')
             $('.files').append(string)
     });
 
@@ -57,7 +65,37 @@ $(document).on('turbolinks:load', function () {
 <label for="question_attachments_attributes_` + ++number + `_file">File</label>
 <input class="file new-file" type="file" name="question[attachments_attributes][` + number + `][file]" id="question_attachments_attributes_` + number + `_file">
 </div>`
-        if($('.file').val() !== '')
+        if ($('.file').val() !== '')
             $('.file-new').last().after(string)
     });
+
+    $(document).on('click', $('.upvote'), function () {
+        if ($('.upvote').hasClass('upvote-active')) {
+            $('.upvote').removeClass('upvote-active');
+        } else {
+            $('.upvote').addClass('upvote-active');
+        }
+    })
+
+
+    $('.vote-button').bind('ajax:success', function (e) {
+        let answer = e.detail[0];
+        if(answer.current_user_opinion.opinion ===  1){
+            $('.upvote-' + answer.id).addClass('active-upvote')
+            $('.downvote-' + answer.id).removeClass('active-downvote')
+        }
+        else if(answer.current_user_opinion.opinion === -1){
+            $('.downvote-' + answer.id).addClass('active-downvote')
+            $('.upvote-' + answer.id).removeClass('active-upvote')
+        }
+        else{
+            $('.upvote-' + answer.id).removeClass('active-upvote')
+            $('.downvote-' + answer.id).removeClass('active-downvote')
+        }
+        $('.score-' + answer.id).html(answer.total_score)
+    })
+
+    $('.vote-button').bind('ajax:error', function (e) {
+        alert(e.detail[0].base)
+    })
 })

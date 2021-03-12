@@ -1,8 +1,16 @@
 div class = (["answer", answer.best ? "green" : ""])
   div.vote
-    a href = upvote_question_answer_path(answer.question, answer) data-method = "patch" data-remote = "true" = fa_icon "arrow-up", class: "upvote"
-    = answer.total_score
-    a href = downvote_question_answer_path(answer.question, answer) data-method = "patch" data-remote = "true" = fa_icon "arrow-down", class: "downvote"
+    a {href = upvote_question_answer_path(answer.question, answer)
+      data-method = "patch"
+      data-remote = "true"
+      class="vote-button" }
+        = fa_icon "arrow-up", class: "upvote upvote-#{answer.id} #{'active-upvote' if answer.upvoted?(current_user)}"
+    p class = 'score-#{answer.id}' = answer.total_score
+    a {href = downvote_question_answer_path(answer.question, answer)
+      data-method = "patch"
+      data-remote = "true"
+      class="vote-button" }
+      = fa_icon "arrow-down", class: "downvote downvote-#{answer.id} #{'active-downvote' if answer.downvoted?(current_user)}"
   div class = (["answer-#{answer.id} answer-body"])
     h5 = answer.user
     p class = "body-#{answer.id}" = answer.body
@@ -19,7 +27,7 @@ div class = (["answer", answer.best ? "green" : ""])
             = form_tag question_answer_path(answer.question, answer), method: :delete, remote: true do |f|
               = submit_tag 'Delete', id: 'select'
           - if current_user.email == question.user
-            = form_tag set_best_question_answer_path(question,answer), remote: true do
+            = form_tag set_best_question_answer_path(question, answer), remote: true do
               = submit_tag 'Select as the best', id: 'select'
       div.attachments
         p Attachments:
