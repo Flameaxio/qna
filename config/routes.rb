@@ -16,4 +16,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  mount ActionCable.server => '/cable'
 end
