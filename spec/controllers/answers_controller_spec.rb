@@ -31,7 +31,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid attributes' do
       let(:create_request) do
         post :create, params: \
-        { question_id: question, answer: attributes_for(:answer) }, format: :js
+        { question_id: question, answer: attributes_for(:answer), controller: answer }
       end
 
       it 'saves the new question in the database' do
@@ -49,10 +49,6 @@ RSpec.describe AnswersController, type: :controller do
         expect { create_request }.to_not change(Answer, :count)
       end
 
-      it 'should redirect to new view' do
-        create_request
-        expect(response).to render_template :create
-      end
     end
   end
   describe 'DELETE #destroy' do
