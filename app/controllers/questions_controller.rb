@@ -1,6 +1,16 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[show edit update destroy]
+  before_action :find_question, only: %i[show edit update destroy publish_question]
+
+  after_action :publish_question, only: %i[create]
+
+  def publish_question
+    json = @question.attributes.merge('current_user' => (user_signed_in? ? current_user.to_json : '0'),\
+                                      'short_body' => @question.short_body,\
+                                      'question_path' => question_path(@question),\
+                                      'user' => @question.user)
+    ActionCable.server.broadcast 'question_channel', json
+  end
 
   def index
     @questions = Question.all
