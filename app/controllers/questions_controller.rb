@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: %i[create]
 
   def publish_question
+    return if @question.errors.any?
+
     json = @question.attributes.merge('current_user' => (user_signed_in? ? current_user.to_json : '0'),\
                                       'short_body' => @question.short_body,\
                                       'question_path' => question_path(@question),\
