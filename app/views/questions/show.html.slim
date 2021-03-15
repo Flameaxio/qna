@@ -18,14 +18,27 @@ div.container
           = f.submit 'Save', class: 'file-submit'
       = link_to 'Edit', '', class: 'edit-question-link'
     - if @question.attachments.any?
-      div.attachments
-        p Attachments:
-        ul.list
-          - @question.attachments.each do |a|
-            - unless a.new_record?
-              li
-                = link_to a.name, a.file.url
-                = render 'remove_form', question: @question, attachment: a
+      div.additions
+        div.attachments
+          p Attachments:
+          ul.list
+            - @question.attachments.each do |a|
+              - unless a.new_record?
+                li
+                  = link_to a.name, a.file.url
+                  = render 'remove_form', question: @question, attachment: a
+        div.question-comments
+          p Comments:
+          ul.question-comment-list
+            - @question.comments.each do |c|
+              - unless c.new_record?
+                li
+                  span = "#{c.user.email}: "
+                  = "#{c.body}"
+          a.add-comment Add comment
+          = form_tag question_comment_question_path(@question), class: 'add-comment-form', remote: true do
+            = text_field :comment, :body
+            = submit_tag 'Comment'
     hr
   div.answers
     - if @answers.where(best: true).size > 0
