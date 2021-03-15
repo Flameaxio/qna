@@ -5,15 +5,8 @@ class AnswersController < ApplicationController
   after_action :publish_answer, only: %i[create]
 
   def publish_answer
-    # json = @comment.attributes.merge('email' => @comment.user.email)
-    # renderer = ApplicationController.renderer.new
-    # renderer.instance_variable_set(:@env, { "HTTP_HOST" => "localhost:3000",
-    #                                        "HTTPS" => "off",
-    #                                        "REQUEST_METHOD" => "GET",
-    #                                        "SCRIPT_NAME" => "",
-    #                                        "warden" => warden })
-    #render = renderer.render(file: "#{Rails.root}/app/views/questions/_answer.html.slim", assigns: { question: @answer.question,
-    #                                                                         answer: @answer })
+    return if @answer.errors.any?
+
     ActionCable.server.broadcast('answers_channel',
                                  ApplicationController.render_with_signed_in_user(current_user,
                                                                                   'questions/_answer.html.slim',
