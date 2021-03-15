@@ -12,8 +12,7 @@ class AnswersController < ApplicationController
                                                                                   'questions/_answer.html.slim',
                                                                                   locals: { answer: @answer,
                                                                                             question: @answer.question },
-                                                                                  layout: false
-                                 ))
+                                                                                  layout: false))
 
   end
 
