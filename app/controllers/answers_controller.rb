@@ -2,6 +2,20 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[upvote downvote]
   before_action :find_question
   before_action :find_answer, only: %i[update show destroy set_best upvote downvote]
+  after_action :publish_answer, only: %i[create]
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast('answers_channel',
+                                 ApplicationController.render_with_signed_in_user(current_user,
+                                                                                  'questions/_answer.html.slim',
+                                                                                  locals: { answer: @answer,
+                                                                                            question: @answer.question },
+                                                                                  layout: false
+                                 ))
+
+  end
 
   def update
     @question = @answer.question

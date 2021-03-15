@@ -51,6 +51,8 @@ feature 'Create answer to question', '
     click_on 'Submit'
 
     expect(current_path).to eq question_path(question)
-    expect(page).to have_content "Body can't be blank!"
+    within '.answers' do
+      expect(page).to_not have_content "Body"
+    end
   end
 end
