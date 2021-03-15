@@ -1,15 +1,8 @@
 $(document).on('turbolinks:load', function () {
-    /*Object.keys(window).forEach(key => {
-        if (/^on/.test(key)) {
-            window.addEventListener(key.slice(2), event => {
-                console.log(event);
-            });
-        }
-    });*/
 
     let number = 0;
     $('.add-file-form').not(':last').remove();
-    $('.edit-answer-link').click(function (e) {
+    $(document).on('click','.edit-answer-link', function (e) {
         e.preventDefault();
         let answer_id = $(this).data('answerId');
         $(".answer-form-" + answer_id).toggle();
@@ -23,7 +16,7 @@ $(document).on('turbolinks:load', function () {
         }
     })
 
-    $('.edit-question-link').click(function (e) {
+    $(document).on('click','.edit-question-link', function (e) {
         e.preventDefault();
         let title = $('.question-title');
         let body = $('.question-body');
@@ -41,12 +34,12 @@ $(document).on('turbolinks:load', function () {
         }
     })
 
-    $('.add-file').click(function (e) {
+    $(document).on('click','.add-file', function (e) {
         e.preventDefault();
         $('.add-file-form').toggle();
     })
 
-    $('.add-file-answer').click(function (e) {
+    $(document).on('click', '.add-file-answer', function (e) {
         e.preventDefault();
         $('.add-file-form-answer').toggle();
     })
@@ -78,7 +71,7 @@ $(document).on('turbolinks:load', function () {
     })
 
 
-    $('.vote-button').bind('ajax:success', function (e) {
+    $(document).on('ajax:success', '.vote-button', function (e) {
         let answer = e.detail[0];
         if(answer.current_user_opinion.opinion ===  1){
             $('.upvote-' + answer.id).addClass('active-upvote')
@@ -95,7 +88,19 @@ $(document).on('turbolinks:load', function () {
         $('.score-' + answer.id).html(answer.total_score)
     })
 
-    $('.vote-button').bind('ajax:error', function (e) {
+    $(document).on('ajax:error', '.vote-button', function (e) {
         alert(e.detail[0].base)
     })
+
+    $(document).on('click', '.add-comment', function (e){
+        e.preventDefault();
+        $('.add-comment').toggle()
+        $('.add-comment-form').toggle()
+    });
+
+    $(document).on('click','.add-comment-answer', function (e){
+        e.preventDefault();
+        id = this.classList[0].match(/\d+/)[0]
+        $(".add-comment-form-" + id).toggle()
+    });
 })
