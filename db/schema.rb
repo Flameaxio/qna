@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_03_13_174822) do
     t.string "commentable_type"
     t.integer "user_id"
     t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
