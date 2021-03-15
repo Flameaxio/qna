@@ -1,8 +1,11 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show edit update destroy publish_question]
+  before_action :find_answers, only: :show
 
   after_action :publish_question, only: %i[create]
+
+  respond_to :js, :html
 
   def publish_question
     return if @question.errors.any?
@@ -15,35 +18,28 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answers = @question.answers
-    @answer = Answer.new(question: @question) if user_signed_in?
+    respond_with @question
   end
 
   def new
-    @question = Question.new
+    respond_with(@question = Question.new)
   end
 
   def create
-    @question = Question.new(questions_params)
-    @question.user_id = current_user.id
-    if @question.save
-      redirect_to questions_path, notice: 'Your question was successfully published!'
-    else
-      render :new
-    end
+    respond_with(@question = Question.create(questions_params.merge('user_id'=>current_user.id)))
   end
 
   def update
     @question.update(questions_params)
+    respond_with @question
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    respond_with(@question.destroy)
   end
 
   def remove_attachment
@@ -59,5 +55,10 @@ class QuestionsController < ApplicationController
 
   def find_question
     @question = Question.find(params[:id])
+  end
+
+  def find_answers
+    @answers = @question.answers
+    @answer = Answer.new(question: @question) if user_signed_in?
   end
 end

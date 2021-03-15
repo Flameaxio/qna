@@ -1,4 +1,3 @@
-
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_question, only: %i[comment_question]
