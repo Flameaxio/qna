@@ -26,7 +26,11 @@ gem 'jbuilder', '~> 2.7'
 gem 'pry', :group => :development
 gem 'pry-rails', :group => :development
 
-gem 'devise'
+gem 'devise', github: 'heartcombo/devise', branch: 'master'
+gem 'omniauth'
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-github'
+
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -50,6 +54,9 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rexml'
   gem 'rspec-rails'
+  gem 'launchy'
+  gem 'letter_opener'
+  gem 'capybara-email'
 end
 
 group :development do
@@ -70,7 +77,6 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'database_cleaner-active_record'
-  gem 'launchy'
   gem 'shoulda-matchers'
   gem 'webdrivers'
   gem 'webrick'
