@@ -1,0 +1,7 @@
+div.container
+  = form_tag users_authorize_create_path, method: :post
+    = hidden_field :authorization, :provider, value: @provider
+    = hidden_field :authorization, :uid, value: @uid
+    = label_tag :email
+    = email_field_tag :email
+    = submit_tag 'Submit'
