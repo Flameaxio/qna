@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  get 'comments/create'
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   root to: 'questions#index'
+
+  get 'users/authorize/new', to: 'users#new_authorized'
+  post 'users/authorize/create', to: 'users#create_authorized'
 
   resources :questions do
     post :comment_question, to: 'comments#comment_question'
@@ -19,9 +21,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-
-  post '/comments/', to: 'comments#create_question_comment'
 
   mount ActionCable.server => '/cable'
 end

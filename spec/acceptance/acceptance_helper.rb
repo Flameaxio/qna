@@ -5,6 +5,7 @@ RSpec.configure do |config|
   Capybara.server = :puma
   config.use_transactional_fixtures = false
   config.include AcceptanceHelper, type: :feature
+  config.include OmniauthMacros, type: :feature
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
@@ -26,3 +27,4 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
+OmniAuth.config.test_mode = true
