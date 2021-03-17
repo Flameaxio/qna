@@ -9,7 +9,7 @@ feature 'Create question', '
   given(:user) { create(:user) }
 
   scenario 'Authenticated user creates the question' do
-    sign_in(user)
+    authorize(user)
 
     visit questions_path
     click_on 'Ask a question'
@@ -28,7 +28,7 @@ feature 'Create question', '
 
   scenario 'Multiple sessions', js: true do
     Capybara.using_session('user') do
-      sign_in(user)
+      authorize(user)
       visit questions_path
     end
     Capybara.using_session('guest') do

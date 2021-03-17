@@ -9,7 +9,7 @@ feature 'Create answer to question', '
   given(:question) { create(:question) }
 
   scenario 'Authenticated user creates an answer', js: true do
-    sign_in(user)
+    authorize(user)
 
     visit question_path(question)
     fill_in 'answer[body]', with: 'My answer'
@@ -22,7 +22,7 @@ feature 'Create answer to question', '
   end
 
   scenario 'Authenticated user creates an answer with an attachment', js: true do
-    sign_in(user)
+    authorize(user)
 
     visit question_path(question)
     within '.container .new_answer_wrapper' do
@@ -45,7 +45,7 @@ feature 'Create answer to question', '
   end
 
   scenario 'Authenticated user tries to create answer with blank field', js: true do
-    sign_in(user)
+    authorize(user)
 
     visit question_path(question)
     click_on 'Submit'

@@ -11,7 +11,7 @@ feature 'Edit answer to question', '
     question = create(:question, user_id: user.id)
     answer = create(:answer, question: question, user_id: user.id)
 
-    sign_in(user)
+    authorize(user)
     visit question_path(question)
     within '.answers' do
       click_on 'Edit'

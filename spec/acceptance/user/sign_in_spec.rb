@@ -9,7 +9,7 @@ feature 'User sign in', '
   given(:user) { create(:user) }
 
   scenario 'Registered user tries to sign in' do
-    sign_in(user)
+    authorize(user)
 
     expect(page).to have_content 'Signed in successfully.'
     expect(current_path).to eq root_path

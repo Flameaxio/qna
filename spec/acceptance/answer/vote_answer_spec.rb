@@ -11,7 +11,7 @@ feature 'Vote for answer', '
   given!(:answer) { create(:answer, user_id: author.id, question: question) }
 
   scenario 'User votes for answer', js: true do
-    sign_in user
+    authorize user
 
     visit question_path(question)
 
@@ -23,7 +23,7 @@ feature 'Vote for answer', '
     expect(page).to have_content('0')
   end
   scenario 'Author votes for answer', js: true do
-    sign_in author
+    authorize author
 
     visit question_path(question)
 

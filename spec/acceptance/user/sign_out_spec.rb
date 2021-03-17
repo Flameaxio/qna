@@ -8,7 +8,7 @@ feature 'User sign out', '
   given(:user) { create(:user) }
 
   scenario 'Authenticated user logs out' do
-    sign_in(user)
+    authorize(user)
 
     visit root_path
     click_on 'Sign out'

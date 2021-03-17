@@ -9,7 +9,7 @@ feature 'Edit question', '
     user = create(:user)
     question = create(:question, user_id: user.id)
 
-    sign_in(user)
+    authorize(user)
     visit question_path(question)
     within '.question' do
       click_on 'Edit'
