@@ -3,7 +3,7 @@ module ControllerMacros
     before do
       @user = create(:user, admin: true)
       @request.env['devise.mapping'] = Devise.mappings[:user]
-      sign_in @user
+      authorize @user
     end
   end
 end

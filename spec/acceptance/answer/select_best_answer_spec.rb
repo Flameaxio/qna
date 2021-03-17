@@ -9,7 +9,7 @@ feature 'Select the best answer', '
   given!(:question) { create(:question, user_id: user.id) }
   given!(:answer) { create(:answer, user_id: user.id, question: question) }
   scenario 'Author tries to select the best answer', js: true do
-    sign_in(user)
+    authorize(user)
     visit question_path(question)
     click_on 'Select as the best'
     wait_for_ajax
