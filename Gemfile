@@ -30,6 +30,7 @@ gem 'devise', github: 'heartcombo/devise', branch: 'master'
 gem 'omniauth'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-github'
+gem 'omniauth-twitter'
 
 
 # Use Active Storage variant
