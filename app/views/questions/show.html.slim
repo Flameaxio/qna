@@ -2,7 +2,7 @@ div.container
   div.question
     h1 class= 'question-title' = @question.title
     h3 class= 'question-body' = @question.body
-    - if user_signed_in? && current_user.email == @question.user
+    - if can?(:update, Question)
       = form_for(@question, remote: true, html: { class: 'edit-question-form', style: 'display:none;' }) do |f|
         = f.label :title, hidden: true
         = f.text_field :title, class: 'edit-title'
@@ -35,10 +35,11 @@ div.container
                 li
                   span = "#{c.user.email}: "
                   = "#{c.body}"
-          a.add-comment Add comment
-          = form_tag question_comment_question_path(@question), class: 'add-comment-form', remote: true do
-            = text_field :comment, :body
-            = submit_tag 'Comment'
+          - if can?(:comment_question, Comment)
+            a.add-comment Add comment
+            = form_tag question_comment_question_path(@question), class: 'add-comment-form', remote: true do
+              = text_field :comment, :body
+              = submit_tag 'Comment'
     hr
   div.answers
     - if @answers.where(best: true).size > 0

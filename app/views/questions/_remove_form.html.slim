@@ -1,4 +1,4 @@
-- if user_signed_in? && current_user.email == question.user
+- if can?(:destroy, Attachment)
   div.delete-form
     = form_tag remove_attachment_question_path(id: question.id, attachment_id: attachment.id),method: :delete, remote: true, class: 'delete-form' do
       = submit_tag "\u274C", id: 'delete'
