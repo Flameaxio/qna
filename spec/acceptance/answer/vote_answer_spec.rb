@@ -15,11 +15,11 @@ feature 'Vote for answer', '
 
     visit question_path(question)
 
-    first(".vote-button").click
+    first('.vote-button').click
     expect(page).to have_content('1')
-    all(".vote-button").last.click
+    all('.vote-button').last.click
     expect(page).to have_content('-1')
-    all(".vote-button").last.click
+    all('.vote-button').last.click
     expect(page).to have_content('0')
   end
   scenario 'Author votes for answer', js: true do
@@ -28,7 +28,7 @@ feature 'Vote for answer', '
     visit question_path(question)
 
     accept_alert("You can't vote for your answer!") do
-      first(".vote-button").click
+      first('.vote-button').click
     end
   end
 end

@@ -6,6 +6,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.include AcceptanceHelper, type: :feature
   config.include OmniauthMacros, type: :feature
+  config.include WaitForAjax, type: :feature
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

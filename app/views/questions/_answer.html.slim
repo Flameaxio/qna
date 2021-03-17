@@ -14,7 +14,7 @@ div class = (["answer", answer.best ? "green" : ""])
   div class = (["answer-#{answer.id} answer-body"])
     h5 = answer.user
     p class = "body-#{answer.id}" = answer.body
-    - if user_signed_in?
+    - if can?(:create, Question)
       = form_for([question, answer], remote: true, html: { class: "answer-form-#{answer.id} answer-form" }) do |f|
         = f.label :body, "Answer", hidden: true
         = f.text_area :body
@@ -42,11 +42,13 @@ div class = (["answer", answer.best ? "green" : ""])
       div.actions-wrapper
         hr
         div.actions
-          a class = "add-comment-answer-#{answer.id} add-comment-answer" Add comment
-          - if current_user.email == answer.user
+          - if can?(:comment_answer, Comment)
+            a class = "add-comment-answer-#{answer.id} add-comment-answer" Add comment
+          - if can?(:update, answer)
             = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+          - if can?(:destroy, answer)
             = form_tag question_answer_path(answer.question, answer), method: :delete, remote: true do |f|
               = submit_tag 'Delete', id: 'select'
-          - if current_user.email == question.user
+          - if can?(:set_best, answer)
             = form_tag set_best_question_answer_path(question, answer), remote: true do
               = submit_tag 'Select as the best', id: 'select'

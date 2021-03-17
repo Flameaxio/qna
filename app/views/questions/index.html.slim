@@ -9,4 +9,5 @@ div.container-fluid
         th
     tbody class = 'questions_list'
     = render @questions
-  p = link_to 'Ask a question', new_question_path
+  - if can?(:create, Question)
+    p = link_to 'Ask a question', new_question_path

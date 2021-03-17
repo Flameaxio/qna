@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
-         :omniauthable, omniauth_providers: [:github]
+         :omniauthable, omniauth_providers: [:github, :twitter]
   has_many :questions
   has_many :answers
   has_many :comments
@@ -15,6 +15,9 @@ class User < ApplicationRecord
     return authorization.user if authorization
 
     email = auth[:info][:email]
+
+    provider = auth[:provider]
+    uid = auth[:uid].to_s
 
     user = User.where(email: email).first
     return nil unless user

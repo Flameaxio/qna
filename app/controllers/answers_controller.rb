@@ -4,6 +4,9 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: %i[update show destroy set_best upvote downvote]
   after_action :publish_answer, only: %i[create]
 
+  authorize_resource :question
+  authorize_resource :answer
+
   def publish_answer
     return if @answer.errors.any?
 

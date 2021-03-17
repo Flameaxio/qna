@@ -12,6 +12,7 @@ feature 'Select the best answer', '
     sign_in(user)
     visit question_path(question)
     click_on 'Select as the best'
+    wait_for_ajax
     expect(page).to have_css('div.green')
   end
 
