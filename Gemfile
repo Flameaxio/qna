@@ -44,15 +44,20 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'carrierwave'
 
+gem 'doorkeeper'
+
 git_source(:github){ |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem "font-awesome-rails"
 gem 'remotipart', github: 'jbox-web/remotipart', tag: '1.6.0'
 
+group :development, :production do
+  gem 'factory_bot'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rexml'
   gem 'rspec-rails'
@@ -82,6 +87,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'webdrivers'
   gem 'webrick'
+  gem 'json_spec'
+  gem 'factory_bot_rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
