@@ -22,9 +22,8 @@ feature 'Create question', '
 
   scenario 'Non-authenticated user tries to create question' do
     visit questions_path
-    click_on 'Ask a question'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_link 'Ask a question'
   end
 
   scenario 'Multiple sessions', js: true do
