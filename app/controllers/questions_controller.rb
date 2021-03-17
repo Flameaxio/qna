@@ -7,6 +7,9 @@ class QuestionsController < ApplicationController
 
   respond_to :js, :html
 
+  authorize_resource :question
+  authorize_resource :answer
+
   def publish_question
     return if @question.errors.any?
 

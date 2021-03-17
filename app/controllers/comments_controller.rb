@@ -5,6 +5,10 @@ class CommentsController < ApplicationController
 
   after_action :publish_question_comment
 
+  authorize_resource :question
+  authorize_resource :answer
+  authorize_resource :comment
+
   def publish_question_comment
     return if @comment.errors.any?
 
