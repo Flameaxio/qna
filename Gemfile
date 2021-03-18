@@ -50,6 +50,8 @@ gem 'active_model_serializers'
 
 gem 'sidekiq'
 
+gem 'whenever'
+
 git_source(:github){ |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem "font-awesome-rails"
