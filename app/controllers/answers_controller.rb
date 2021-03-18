@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
   before_action :find_question
   before_action :find_answer, only: %i[update show destroy set_best upvote downvote]
   after_action :publish_answer, only: %i[create]
+  after_action :notify_subscribers, only: %i[create]
 
   authorize_resource :question
   authorize_resource :answer
@@ -126,5 +127,12 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, :attachment_id, attachments_attributes: [:file])
+  end
+
+  def notify_subscribers
+    Subscription.where(question_id: @question).each do |sub|
+      user = User.find(sub.user_id)
+      UpdatesMailer.delay.notify(user, @question)
+    end
   end
 end
