@@ -18,10 +18,10 @@ div.container
           = f.submit 'Save', class: 'file-submit'
       div.question-actions
         = link_to 'Edit', '', class: 'edit-question-link'
-      - if can?(:subscribe, Question)
-        = form_tag
-          = label_tag :subscribed
-          = check_box_tag :subscribed, 1 ,current_user.subbed?(@question)
+        - if can?(:subscribe, Question)
+          = form_tag
+            = label_tag :subscribed
+            = check_box_tag :subscribed, 1 ,current_user.subbed?(@question)
     - if @question.attachments.any?
       div.additions
         div.attachments
