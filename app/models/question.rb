@@ -3,6 +3,7 @@ class Question < ApplicationRecord
   has_many :answers, dependent: :delete_all
   has_many :attachments, as: :attachable, dependent: :delete_all
   has_many :comments, as: :commentable, dependent: :delete_all
+  has_many :subscriptions, dependent: :delete_all
 
   default_scope { order(created_at: :desc) }
 

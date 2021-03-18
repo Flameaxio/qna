@@ -50,6 +50,10 @@ class QuestionsController < ApplicationController
     Attachment.find(params[:attachment_id]).destroy
   end
 
+  def subscribe
+
+  end
+
   private
 
   def questions_params
