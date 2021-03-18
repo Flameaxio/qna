@@ -2,6 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+.question-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .answer-form {
   display: none;
   padding-bottom: 40px;

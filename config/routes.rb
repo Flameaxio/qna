@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post :comment_question, to: 'comments#comment_question'
     member do
       delete :remove_attachment
+      post :subscribe
     end
     resources :answers do
       post :comment_answer, to: 'comments#comment_answer'

@@ -16,6 +16,7 @@ class Ability
         can :downvote, Answer
         can :comment_answer, Comment
         can :comment_question, Comment
+        can :subscribe, Question
         can :set_best, Answer do |answer|
           question = answer.question
           question.user_id == user.id

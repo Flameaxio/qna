@@ -1,5 +1,5 @@
 div.container
-  div.question
+  div class = "question" data-title = 'question_id' data-content = "#{@question.id}"
     h1 class= 'question-title' = @question.title
     h3 class= 'question-body' = @question.body
     - if can?(:update, Question)
@@ -16,7 +16,12 @@ div.container
                 = a.label :file
                 = a.file_field :file, class: 'file'
           = f.submit 'Save', class: 'file-submit'
-      = link_to 'Edit', '', class: 'edit-question-link'
+      div.question-actions
+        = link_to 'Edit', '', class: 'edit-question-link'
+      - if can?(:subscribe, Question)
+        = form_tag
+          = label_tag :subscribed
+          = check_box_tag :subscribed, 1 ,current_user.subbed?(@question)
     - if @question.attachments.any?
       div.additions
         div.attachments

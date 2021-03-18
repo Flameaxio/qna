@@ -17,9 +17,6 @@ class User < ApplicationRecord
 
     email = auth[:info][:email]
 
-    provider = auth[:provider]
-    uid = auth[:uid].to_s
-
     user = User.where(email: email).first
     return nil unless user
 
@@ -30,5 +27,9 @@ class User < ApplicationRecord
 
   def create_authorization(auth)
     authorizations.create(provider: auth.provider, uid: auth.uid)
+  end
+
+  def subbed?(question)
+    Subscription.where(user_id: id, question_id: question.id).first != nil
   end
 end

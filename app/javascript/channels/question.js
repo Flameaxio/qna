@@ -103,4 +103,20 @@ $(document).on('turbolinks:load', function () {
         id = this.classList[0].match(/\d+/)[0]
         $(".add-comment-form-" + id).toggle()
     });
+
+    $(() => $("#subscribed").click(() => {
+        let question = $('.question')
+        let question_id = question.data('content');
+        $.ajax({
+            type: "POST",
+            url: "/questions/"+question_id+"/subscribe",
+            data: {},
+            success(data) {
+            },
+            error(data) {
+                alert('error')
+                return false;
+            }
+        })
+    }));
 })
