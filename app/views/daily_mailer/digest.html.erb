@@ -1,0 +1,20 @@
+<p>"Hello #{current_user.email}"</p>
+<p>Here's you daily digest!</p>
+<table class="table table-bordered">
+  <thead class="table-dark">
+  <tr>
+  <th>Title</th>
+  <th>Author</th>
+  <th>Link</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% questions.each do |q| %>
+    <tr>
+      <td><%= q.title %></td>
+      <td><%= q.user %></td>
+      <td><%= link_to 'Here', question_path(q) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
