@@ -1,4 +1,4 @@
-<p>"Hello #{current_user.email}"</p>
+<p>"Hello #{@user.email}"</p>
 <p>Here's you daily digest!</p>
 <table class="table table-bordered">
   <thead class="table-dark">
@@ -9,11 +9,11 @@
   </tr>
   </thead>
   <tbody>
-  <% questions.each do |q| %>
+  <% @questions.each do |q| %>
     <tr>
       <td><%= q.title %></td>
       <td><%= q.user %></td>
-      <td><%= link_to 'Here', question_path(q) %></td>
+      <td><%= link_to 'Here', question_url(q) %></td>
     </tr>
   <% end %>
   </tbody>
