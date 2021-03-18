@@ -32,4 +32,10 @@ class User < ApplicationRecord
   def subbed?(question)
     Subscription.where(user_id: id, question_id: question.id).first != nil
   end
+
+  def self.send_daily_digest
+    User.find_each do |user|
+      DailyMailer.delay.digest(user)
+    end
+  end
 end
