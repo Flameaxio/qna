@@ -15,7 +15,7 @@ class Api::V1::BaseController < ApplicationController
 
   def authenticate_user!
     if doorkeeper_token.try(:resource_owner_id)
-      Thread.current[:current_user] = User.find(doorkeeper_token.resource_owner_id)
+      RequestStore.store[:current_user] = User.find(doorkeeper_token.resource_owner_id)
     end
 
     return if current_user
@@ -24,6 +24,6 @@ class Api::V1::BaseController < ApplicationController
   end
 
   def current_user
-    Thread.current[:current_user]
+    RequestStore.store[:current_user]
   end
 end
