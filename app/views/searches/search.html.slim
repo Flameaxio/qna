@@ -1,0 +1,18 @@
+div.container
+  h4 Results
+  table.table.table-bordered
+    thead.table-dark
+      tr
+        th Type
+        th Email/Body
+        th Link
+    tbody
+      - @search.result.each do |res|
+        tr
+          td = res.class
+          - if res.class.to_s == 'User'
+            td = res.email
+            td None
+          - else
+            td = res.body
+            td = link_to 'Here', res.route
