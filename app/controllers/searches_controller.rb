@@ -1,5 +1,10 @@
-class SearchesController
+class SearchesController < ApplicationController
   def search
-    render json: 'nice'
+    @search = Search.new(search_params)
+    @search.perform
+  end
+
+  def search_params
+    params.permit(:type, :search)
   end
 end
