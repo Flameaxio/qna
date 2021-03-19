@@ -52,4 +52,8 @@ class Answer < ApplicationRecord
   rescue StandardError
     false
   end
+
+  def route
+    question.route
+  end
 end

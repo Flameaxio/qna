@@ -4,4 +4,7 @@ class Comment < ApplicationRecord
   validates :body, presence: true
   validates :user, presence: true
 
+  def route
+    commentable.route
+  end
 end
