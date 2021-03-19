@@ -54,6 +54,9 @@ gem 'whenever'
 
 gem 'request_store'
 
+gem 'mysql2'
+gem 'thinking-sphinx'
+
 git_source(:github){ |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem "font-awesome-rails"
