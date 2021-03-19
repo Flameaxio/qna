@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   get 'users/authorize/new', to: 'users#new_authorized'
   post 'users/authorize/create', to: 'users#create_authorized'
 
+  post '/search', to: 'searches#search'
+  match '*path' => redirect('/'), via: :get
+
   resources :questions do
     post :comment_question, to: 'comments#comment_question'
     member do

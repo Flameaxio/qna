@@ -74,7 +74,6 @@ RSpec.describe 'Questions API' do
     it_behaves_like 'API Authenticable'
     context 'unauthorized' do
       it 'returns 403 status if user does not have enough permissions' do
-        Thread.current[:current_user] = nil
         post '/api/v1/questions', params: { format: :json, question: attributes_for(:question), access_token: access_token.token }
         expect(response.status).to eq 401
       end

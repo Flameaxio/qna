@@ -16,4 +16,8 @@ class Question < ApplicationRecord
   def user
     User.find(user_id).email
   end
+
+  def route
+    Rails.application.routes.url_helpers.question_path(self)
+  end
 end
