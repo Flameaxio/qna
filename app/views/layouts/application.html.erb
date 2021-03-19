@@ -38,14 +38,13 @@
         <i class="fa fa-globe">
           <span class="badge badge-success"></span>
         </i>
-        Test
-        </a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <%= form_tag search_path, class: 'form-inline my-2 my-lg-0' do %>
+      <%= text_field_tag :search,"", class: 'form-control mr-sm-2' %>
+      <%= select_tag :type, options_for_select(Search.searchables, Search.searchables.first), class: 'form-control mr-sm-2' %>
+      <%= submit_tag 'Search', class: 'btn btn-outline-success my-2 my-sm-0' %>
+    <% end %>
   </div>
 </nav>
 <p class="notice"><%= notice %></p>
