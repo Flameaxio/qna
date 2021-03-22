@@ -463,6 +463,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.3)
   rails-controller-testing
+  redis (~> 4.0)
   remotipart!
   request_store
   responders
