@@ -75,6 +75,10 @@ group :development, :test do
   gem 'launchy'
   gem 'letter_opener'
   gem 'capybara-email'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end
 
 group :development do
