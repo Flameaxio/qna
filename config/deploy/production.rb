@@ -7,8 +7,6 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-
-
 # role-based syntax
 # ==================
 
@@ -17,11 +15,13 @@
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-# role :app, %w{deploy@example.com}, my_property: :my_value
-# role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
-# role :db,  %w{deploy@example.com}
+role :app, %w{deployer@192.168.56.5}
+role :web, %w{deployer@192.168.56.5}
+role :db, %w{deployer@192.168.56.5}
 
+set :rails_env, :production
 
+server '192.168.56.5', user: 'deployer', roles: %w{web app db}, primary: true
 
 # Configuration
 # =============
@@ -31,8 +31,6 @@
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
-
-
 # Custom SSH Options
 # ==================
 # You may pass any option but keep in mind that net/ssh understands a
@@ -41,11 +39,11 @@
 #
 # Global options
 # --------------
-#  set :ssh_options, {
-#    keys: %w(/home/user_name/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
+set :ssh_options, {
+  keys: %w(/home/flameaxe/.ssh/id_rsa),
+  forward_agent: true,
+  auth_methods: %w(publickey password)
+}
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
