@@ -24,10 +24,11 @@ namespace :deploy do
   end
 
   after :publishing, :restart
-  task :add_default_hooks do
-    after 'deploy:starting', 'sidekiq:quiet'
-    after 'deploy:updated', 'sidekiq:stop'
-    after 'deploy:reverted', 'sidekiq:stop'
-    after 'deploy:published', 'sidekiq:start'
+
+  task :restart_sidekiq do
+    on roles(:worker) do
+      execute :service, "sidekiq restart"
+    end
   end
+  after "deploy:published", "restart_sidekiq"
 end

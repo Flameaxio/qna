@@ -6,7 +6,6 @@ require "capistrano/deploy"
 require "capistrano/rvm"
 require "capistrano/bundler"
 require "capistrano/rails"
-require "capistrano/sidekiq"
 require "capistrano3/unicorn"
 require 'whenever/capistrano'
 
