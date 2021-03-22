@@ -41,7 +41,7 @@ namespace :sidekiq do
         pid = p capture "ps aux | grep sidekiq | awk '{print $2}' | sed -n 1p"
         execute("kill -9 #{pid}")
       rescue StandardError
-        Rails.logger.info('Sidekiq was not running')
+        puts 'Sidekiq was not running'
       end
     end
   end
