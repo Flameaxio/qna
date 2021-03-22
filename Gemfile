@@ -56,10 +56,12 @@ gem 'request_store'
 
 gem 'mysql2'
 gem 'thinking-sphinx'
+gem 'unicorn'
 
 git_source(:github){ |repo_name| "https://github.com/#{repo_name}.git" }
 
 gem "font-awesome-rails"
+
 gem 'remotipart', github: 'jbox-web/remotipart', tag: '1.6.0'
 
 group :development, :production do
@@ -80,6 +82,7 @@ group :development, :test do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :development do
