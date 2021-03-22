@@ -8,6 +8,9 @@ set :repo_url, 'git@github.com:Flameaxio/qna.git'
 set :deploy_to, '/home/deployer/qna'
 set :deploy_user, 'deployer'
 
+set :sidekiq_roles, -> { :app }
+set :sidekiq_systemd_unit_name, "sidekiq@#{fetch(:stage)}"
+
 # Default value for :linked_files is []
 append :linked_files, 'config/database.yml', 'config/master.key'
 
@@ -24,11 +27,4 @@ namespace :deploy do
   end
 
   after :publishing, :restart
-
-  task :restart_sidekiq do
-    on roles(:worker) do
-      execute :service, "sidekiq restart"
-    end
-  end
-  after "deploy:published", "restart_sidekiq"
 end
