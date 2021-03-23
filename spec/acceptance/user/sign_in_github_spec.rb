@@ -18,7 +18,6 @@ feature 'User sign in with github', '
     fill_in 'Email', with: 'new@user.com'
     click_on 'Submit'
     open_email('new@user.com')
-    current_email.click_link 'Confirm my account'
     visit questions_path
     expect(User.last.email).to eq 'new@user.com'
   end
