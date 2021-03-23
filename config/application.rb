@@ -12,7 +12,7 @@ module Qna
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller
 
-    config.host = 'localhost:3000'
+    config.host = '192.168.56.5'
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
