@@ -1,73 +1,54 @@
-div.container
-  div class = "question" data-title = 'question_id' data-content = "#{@question.id}"
-    h1 class= 'question-title' = @question.title
-    h3 class= 'question-body' = @question.body
-    - if can?(:update, Question)
-      = form_for(@question, remote: true, html: { class: 'edit-question-form', style: 'display:none;' }) do |f|
-        = f.label :title, hidden: true
-        = f.text_field :title, class: 'edit-title'
-        = f.label :body, hidden: true
-        = f.text_area :body, class: 'edit-body'
-        div.bottom-wrapper
-          a href='' class="add-file" Add file
-          div.files
-            = f.fields_for(:attachments, @question.attachments.build) do |a|
-              div.add-file-form style='display: none;'
-                = a.label :file
-                = a.file_field :file, class: 'file'
-          = f.submit 'Save', class: 'file-submit'
-      div.question-actions
-        = link_to 'Edit', '', class: 'edit-question-link'
-        - if can?(:subscribe, Question)
-          = form_tag
-            = label_tag :subscribed
-            = check_box_tag :subscribed, 1 ,current_user.subbed?(@question)
-    - if @question.attachments.any?
-      div.additions
-        div.attachments
-          p Attachments:
-          ul.list
-            - @question.attachments.each do |a|
-              - unless a.new_record?
-                li
-                  = link_to a.name, a.file.url
-                  = render 'remove_form', question: @question, attachment: a
-        div.question-comments
-          p Comments:
-          ul.question-comment-list
-            - @question.comments.each do |c|
-              - unless c.new_record?
-                li
-                  span = "#{c.user.email}: "
-                  = "#{c.body}"
-          - if can?(:comment_question, Comment)
-            a.add-comment Add comment
-            = form_tag question_comment_question_path(@question), class: 'add-comment-form', remote: true do
-              = text_field :comment, :body
-              = submit_tag 'Comment'
-    hr
-  div.answers
-    - if @answers.where(best: true).size > 0
-      = render partial: 'answer', locals: { answer: @answers.where(best: true)[0] , question: @question}
-    - @answers.each do |a|
-      - unless a.best?
-        = render partial: 'answer', locals: { answer: a , question: @question}
-  - if user_signed_in?
-    div.new_answer_wrapper
-      = form_for([@question, @answer], remote: true) do |f|
-        div.form-group
-          = f.label :body, 'Your answer: '
-          div.errors
-          = f.text_area :body, class: 'form-control new-answer-body'
-          div.bottom-wrapper
-            a href='' class="add-file-answer" Add file
-            div.files
-              = f.fields_for(:attachments, @answer.attachments.build) do |a|
-                div.add-file-form-answer style='display: none;'
-                  = a.label :file
-                  = a.file_field :file, class: 'file'
-        = f.submit 'Submit', class: 'btn btn-primary mt-3'
-  - else
-    p
-      = link_to 'Login ', new_user_session_path
-      = "in order to post answers!"
+- cache @question do
+  div.container
+    div class = "question" data-title = 'question_id' data-content = "#{@question.id}"
+      h1 class= 'question-title' = @question.title
+      h3 class= 'question-body' = @question.body
+      - if can?(:update, Question)
+        = render 'edit_form'
+        div.question-actions
+          = link_to 'Edit', '', class: 'edit-question-link'
+          - if can?(:subscribe, Question)
+            = form_tag
+              = label_tag :subscribed
+              = check_box_tag :subscribed, 1 ,current_user.subbed?(@question)
+      - if @question.attachments.any?
+        div.additions
+          div.attachments
+            p Attachments:
+            ul.list
+              = render 'attachments'
+          div.question-comments
+            p Comments:
+            ul.question-comment-list
+              = render 'comments'
+            - if can?(:comment_question, Comment)
+              a.add-comment Add comment
+              = form_tag question_comment_question_path(@question), class: 'add-comment-form', remote: true do
+                = text_field :comment, :body
+                = submit_tag 'Comment'
+      hr
+    div.answers
+      - if @answers.where(best: true).size > 0
+        = render partial: 'answer', locals: { answer: @answers.where(best: true)[0] , question: @question}
+      - @answers.each do |a|
+        - unless a.best?
+          = render partial: 'answer', locals: { answer: a , question: @question}
+    - if user_signed_in?
+      div.new_answer_wrapper
+        = form_for([@question, @answer], remote: true) do |f|
+          div.form-group
+            = f.label :body, 'Your answer: '
+            div.errors
+            = f.text_area :body, class: 'form-control new-answer-body'
+            div.bottom-wrapper
+              a href='' class="add-file-answer" Add file
+              div.files
+                = f.fields_for(:attachments, @answer.attachments.build) do |a|
+                  div.add-file-form-answer style='display: none;'
+                    = a.label :file
+                    = a.file_field :file, class: 'file'
+          = f.submit 'Submit', class: 'btn btn-primary mt-3'
+    - else
+      p
+        = link_to 'Login ', new_user_session_path
+        = "in order to post answers!"

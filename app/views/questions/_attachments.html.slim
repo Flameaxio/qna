@@ -1,0 +1,6 @@
+- @question.attachments.each do |a|
+  - cache a do
+    - unless a.new_record?
+      li
+        = link_to a.name, a.file.url
+        = render 'remove_form', question: @question, attachment: a

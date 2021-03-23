@@ -81,7 +81,7 @@ group :development, :test do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
-  gem 'capistrano-sidekiq', require: false, github: 'rwojnarowski/capistrano-sidekiq'
+  gem "capistrano-sidekiq", git: "https://github.com/rwojnarowski/capistrano-sidekiq.git"
   gem 'capistrano3-unicorn', require: false
 end
 

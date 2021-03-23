@@ -1,54 +1,55 @@
-div class = (["answer", answer.best ? "green" : ""])
-  div.vote
-    a {href = upvote_question_answer_path(question, answer)
-      data-method = "patch"
-      data-remote = "true"
-      class="vote-button" }
-        = fa_icon "arrow-up", class: "upvote upvote-#{answer.id} #{'active-upvote' if answer.upvoted?(current_user)}"
-    p class = 'score-#{answer.id}' = answer.total_score
-    a {href = downvote_question_answer_path(question, answer)
-      data-method = "patch"
-      data-remote = "true"
-      class="vote-button" }
-      = fa_icon "arrow-down", class: "downvote downvote-#{answer.id} #{'active-downvote' if answer.downvoted?(current_user)}"
-  div class = (["answer-#{answer.id} answer-body"])
-    h5 = answer.user
-    p class = "body-#{answer.id}" = answer.body
-    - if can?(:create, Question)
-      = form_for([question, answer], remote: true, html: { class: "answer-form-#{answer.id} answer-form" }) do |f|
-        = f.label :body, "Answer", hidden: true
-        = f.text_area :body
-        = f.submit "Save"
-      div class = "additions"
-        div.attachments
-          p Attachments:
-          ul class = "list-answer-#{answer.id} list-answer"
-            - answer.attachments.each do |at|
-              - unless at.new_record?
-                li
-                  = link_to at.name, at.file.url
-                  = render 'questions/remove_form', question: question, attachment: at
-        div class = "answer-#{answer.id}-comments answer-comments"
-          p Comments:
-          ul class = "answer-comment-list answer-#{answer.id}-comment-list"
-            - answer.comments.each do |c|
-              - unless c.new_record?
-                li
-                  span = "#{c.user.email}: "
-                  = "#{c.body}"
-          = form_tag question_answer_comment_answer_path(question, answer), class: "add-comment-form-#{answer.id} answer-comment-form", remote: true do
-            = text_field :comment, :body
-            = submit_tag 'Comment'
-      div.actions-wrapper
-        hr
-        div.actions
-          - if can?(:comment_answer, Comment)
-            a class = "add-comment-answer-#{answer.id} add-comment-answer" Add comment
-          - if can?(:update, answer)
-            = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-          - if can?(:destroy, answer)
-            = form_tag question_answer_path(answer.question, answer), method: :delete, remote: true do |f|
-              = submit_tag 'Delete', id: 'select'
-          - if can?(:set_best, answer)
-            = form_tag set_best_question_answer_path(question, answer), remote: true do
-              = submit_tag 'Select as the best', id: 'select'
+- cache answer do
+  div class = (["answer", answer.best ? "green" : ""])
+    div.vote
+      a {href = upvote_question_answer_path(question, answer)
+        data-method = "patch"
+        data-remote = "true"
+        class="vote-button" }
+          = fa_icon "arrow-up", class: "upvote upvote-#{answer.id} #{'active-upvote' if answer.upvoted?(current_user)}"
+      p class = 'score-#{answer.id}' = answer.total_score
+      a {href = downvote_question_answer_path(question, answer)
+        data-method = "patch"
+        data-remote = "true"
+        class="vote-button" }
+        = fa_icon "arrow-down", class: "downvote downvote-#{answer.id} #{'active-downvote' if answer.downvoted?(current_user)}"
+    div class = (["answer-#{answer.id} answer-body"])
+      h5 = answer.user
+      p class = "body-#{answer.id}" = answer.body
+      - if can?(:create, Question)
+        = form_for([question, answer], remote: true, html: { class: "answer-form-#{answer.id} answer-form" }) do |f|
+          = f.label :body, "Answer", hidden: true
+          = f.text_area :body
+          = f.submit "Save"
+        div class = "additions"
+          div.attachments
+            p Attachments:
+            ul class = "list-answer-#{answer.id} list-answer"
+              - answer.attachments.each do |at|
+                - unless at.new_record?
+                  li
+                    = link_to at.name, at.file.url
+                    = render 'questions/remove_form', question: question, attachment: at
+          div class = "answer-#{answer.id}-comments answer-comments"
+            p Comments:
+            ul class = "answer-comment-list answer-#{answer.id}-comment-list"
+              - answer.comments.each do |c|
+                - unless c.new_record?
+                  li
+                    span = "#{c.user.email}: "
+                    = "#{c.body}"
+            = form_tag question_answer_comment_answer_path(question, answer), class: "add-comment-form-#{answer.id} answer-comment-form", remote: true do
+              = text_field :comment, :body
+              = submit_tag 'Comment'
+        div.actions-wrapper
+          hr
+          div.actions
+            - if can?(:comment_answer, Comment)
+              a class = "add-comment-answer-#{answer.id} add-comment-answer" Add comment
+            - if can?(:update, answer)
+              = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+            - if can?(:destroy, answer)
+              = form_tag question_answer_path(answer.question, answer), method: :delete, remote: true do |f|
+                = submit_tag 'Delete', id: 'select'
+            - if can?(:set_best, answer)
+              = form_tag set_best_question_answer_path(question, answer), remote: true do
+                = submit_tag 'Select as the best', id: 'select'

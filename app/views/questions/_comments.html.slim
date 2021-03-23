@@ -1,0 +1,6 @@
+- @question.comments.each do |c|
+  - cache c do
+    - unless c.new_record?
+      li
+        span = "#{c.user.email}: "
+        = "#{c.body}"

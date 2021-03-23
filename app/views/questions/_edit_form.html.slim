@@ -1,0 +1,13 @@
+= form_for(@question, remote: true, html: { class: 'edit-question-form', style: 'display:none;' }) do |f|
+  = f.label :title, hidden: true
+  = f.text_field :title, class: 'edit-title'
+  = f.label :body, hidden: true
+  = f.text_area :body, class: 'edit-body'
+  div.bottom-wrapper
+    a href='' class="add-file" Add file
+    div.files
+      = f.fields_for(:attachments, @question.attachments.build) do |a|
+        div.add-file-form style='display: none;'
+          = a.label :file
+          = a.file_field :file, class: 'file'
+    = f.submit 'Save', class: 'file-submit'
