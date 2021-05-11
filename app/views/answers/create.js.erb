@@ -1,0 +1,7 @@
+var string = "<div class='answer border'><%= render partial: 'questions/answer', locals: { answer: @answer } %>"
+<% if user_signed_in? && current_user.email == @answer.user %>
+  string += ('<%= j link_to('Delete', question_answer_path(@answer.question, @answer), method: :delete)%>');
+<% end %>
+let elem = document.getElementsByClassName('answers')[0]
+elem.innerHTML += string;
+document.getElementById('answer_body').value = '';
