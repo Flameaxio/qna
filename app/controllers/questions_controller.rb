@@ -15,8 +15,6 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
-  def edit; end
-
   def create
     @question = Question.new(questions_params)
     @question.user_id = current_user.id
@@ -36,10 +34,15 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
+  def remove_attachment
+    @question = Question.find(params[:id])
+    Attachment.find(params[:attachment_id]).destroy
+  end
+
   private
 
   def questions_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, :attachment_id, attachments_attributes: [:file])
   end
 
   def find_question

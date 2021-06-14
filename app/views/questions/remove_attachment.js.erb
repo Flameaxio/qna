@@ -1,0 +1,10 @@
+$('.list').html('');
+$('.list-answer').html('');
+<% @question.attachments.each do |a| %>
+$('.list').append('<li><%= link_to a.name, a.file.url %> <%= render 'remove_form',question: @question, attachment: a %></li>')
+<% end %>
+<% @question.answers.each do |ans| %>
+<% ans.attachments.each do |a| %>
+$('.list-answer-<%= ans.id %>').append('<li><%= link_to a.name, a.file.url %> <%= render 'remove_form',question: @question, attachment: a %></li>')
+<% end %>
+<% end %>

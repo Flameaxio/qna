@@ -8,4 +8,9 @@
     br
     = f.text_area :body
   div.form-group.mt-3
+  div.files
+    = f.fields_for(:attachments, @question.attachments.build) do |a|
+      div.add-file-form
+        = a.label :file, class: 'file-label'
+        = a.file_field :file, class: 'file-new'
   = f.submit 'Ask!'

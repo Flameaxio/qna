@@ -15,5 +15,13 @@ div class = (["answer", answer.best ? "green" : ""])
             = form_tag question_answer_path(answer.question, answer), method: :delete, remote: true do |f|
               = submit_tag 'Delete', id: 'select'
           - if current_user.email == question.user
-            = form_tag set_best_question_answer_path(question,answer), remote: true do |f|
+            = form_tag set_best_question_answer_path(question,answer), remote: true do
               = submit_tag 'Select as the best', id: 'select'
+      div.attachments
+        p Attachments:
+        ul class = "list-answer-#{answer.id} list-answer"
+          - answer.attachments.each do |at|
+            - unless at.new_record?
+              li
+                = link_to at.name, at.file.url
+                = render 'questions/remove_form', question: question, attachment: at

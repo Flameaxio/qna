@@ -11,6 +11,15 @@ textarea{
   height: 100%;
 }
 
+.files{
+  flex-grow: 100;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: auto;
+}
+
 #select{
   background: none!important;
   border: none;
@@ -26,6 +35,9 @@ textarea{
   min-height: 200px;
   position: relative;
   margin-top: 30px;
+  ul {
+    padding-bottom: 40px;
+  }
   .actions-wrapper{
     width: calc(100% - 40px);
     position: absolute;
@@ -43,6 +55,15 @@ textarea{
   }
 }
 
+.delete-form{
+  display: inline-block;
+  font-size: 12px;
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  cursor: pointer;
+}
+
 .green{
   border: 3px solid green;
 }
@@ -56,3 +77,19 @@ form{
     font-size: 24px;
   }
 }
+
+.bottom-wrapper{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  max-width: inherit;
+  .add-file-form{
+    display: flex;
+    flex-direction: column;
+  }
+  .add-file-form-answer{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
